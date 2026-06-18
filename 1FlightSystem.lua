@@ -1,6 +1,5 @@
 local p = game.Players.LocalPlayer
 local pg = p:WaitForChild("PlayerGui")
-local cam = workspace.CurrentCamera
 
 local mainGui = Instance.new("ScreenGui", pg)
 mainGui.ResetOnSpawn = false
@@ -11,7 +10,7 @@ local circle = Instance.new("TextButton", mainGui)
 circle.Size = UDim2.new(0, 50, 0, 50)
 circle.Position = UDim2.new(0.5, -25, 0.5, -25)
 circle.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
-circle.TextColor3 = Color3.fromRGB(255, 255, 255)
+circle.TextColor3 = Color3.fromRGB(147, 51, 234)
 circle.Text = "N7x"
 circle.TextSize = 14
 circle.BorderSizePixel = 0
@@ -20,8 +19,8 @@ circle.Active = true
 
 -- اللوحة الرئيسية
 local panel = Instance.new("Frame", mainGui)
-panel.Size = UDim2.new(0, 600, 0, 700)
-panel.Position = UDim2.new(0.5, -300, 0.5, -350)
+panel.Size = UDim2.new(0, 900, 0, 550)
+panel.Position = UDim2.new(0.5, -450, 0.5, -275)
 panel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 panel.BorderColor3 = Color3.fromRGB(147, 51, 234)
 panel.BorderSizePixel = 2
@@ -34,7 +33,7 @@ local header = Instance.new("TextLabel", panel)
 header.Size = UDim2.new(1, 0, 0, 40)
 header.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
 header.TextColor3 = Color3.fromRGB(255, 255, 255)
-header.Text = "N7x Aim Bot"
+header.Text = "N7x"
 header.TextSize = 16
 header.BorderSizePixel = 0
 
@@ -47,14 +46,77 @@ closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 closeBtn.Text = "X"
 closeBtn.BorderSizePixel = 0
 
+-- الخانتين العلويات
+local cmdBtn = Instance.new("TextButton", panel)
+cmdBtn.Size = UDim2.new(0.5, -5, 0, 35)
+cmdBtn.Position = UDim2.new(0, 5, 0, 45)
+cmdBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+cmdBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+cmdBtn.Text = "أوامر"
+cmdBtn.TextSize = 12
+cmdBtn.BorderSizePixel = 0
+
+local playerBtn = Instance.new("TextButton", panel)
+playerBtn.Size = UDim2.new(0.5, -5, 0, 35)
+playerBtn.Position = UDim2.new(0.5, 5, 0, 45)
+playerBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+playerBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+playerBtn.Text = "اللاعب"
+playerBtn.TextSize = 12
+playerBtn.BorderSizePixel = 0
+
+-- محتوى الأوامر
+local cmdContent = Instance.new("Frame", panel)
+cmdContent.Size = UDim2.new(1, 0, 1, -85)
+cmdContent.Position = UDim2.new(0, 0, 0, 85)
+cmdContent.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+cmdContent.BorderSizePixel = 0
+cmdContent.Visible = true
+
+-- اليسار (الأزرار)
+local leftPanel = Instance.new("Frame", cmdContent)
+leftPanel.Size = UDim2.new(0.35, 0, 1, 0)
+leftPanel.Position = UDim2.new(0, 0, 0, 0)
+leftPanel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+leftPanel.BorderSizePixel = 0
+
+-- اليمين (الإعدادات)
+local rightPanel = Instance.new("Frame", cmdContent)
+rightPanel.Size = UDim2.new(0.65, 0, 1, 0)
+rightPanel.Position = UDim2.new(0.35, 0, 0, 0)
+rightPanel.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+rightPanel.BorderSizePixel = 0
+
+-- محتوى اللاعب
+local playerContent = Instance.new("Frame", panel)
+playerContent.Size = UDim2.new(1, 0, 1, -85)
+playerContent.Position = UDim2.new(0, 0, 0, 85)
+playerContent.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+playerContent.BorderSizePixel = 0
+playerContent.Visible = false
+
+-- اليسار في قسم اللاعب (البحث والصورة)
+local playerLeftPanel = Instance.new("Frame", playerContent)
+playerLeftPanel.Size = UDim2.new(0.35, 0, 1, 0)
+playerLeftPanel.Position = UDim2.new(0, 0, 0, 0)
+playerLeftPanel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+playerLeftPanel.BorderSizePixel = 0
+
+-- اليمين في قسم اللاعب (الأزرار)
+local playerRightPanel = Instance.new("Frame", playerContent)
+playerRightPanel.Size = UDim2.new(0.65, 0, 1, 0)
+playerRightPanel.Position = UDim2.new(0.35, 0, 0, 0)
+playerRightPanel.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+playerRightPanel.BorderSizePixel = 0
+
 local function makeBtn(parent, name, y)
     local btn = Instance.new("TextButton", parent)
-    btn.Size = UDim2.new(0.9, 0, 0, 40)
+    btn.Size = UDim2.new(0.9, 0, 0, 35)
     btn.Position = UDim2.new(0.05, 0, 0, y)
     btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     btn.TextColor3 = Color3.fromRGB(255, 255, 255)
     btn.Text = name
-    btn.TextSize = 12
+    btn.TextSize = 11
     btn.BorderSizePixel = 0
     return btn
 end
@@ -66,7 +128,7 @@ local function makeLabel(parent, text, y)
     lbl.BackgroundTransparency = 1
     lbl.TextColor3 = Color3.fromRGB(147, 51, 234)
     lbl.Text = text
-    lbl.TextSize = 12
+    lbl.TextSize = 11
     lbl.TextXAlignment = Enum.TextXAlignment.Left
     return lbl
 end
@@ -79,63 +141,107 @@ local function makeInputBox(parent, placeholder, y)
     box.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
     box.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     box.TextColor3 = Color3.fromRGB(255, 255, 255)
-    box.TextSize = 12
+    box.TextSize = 11
     box.BorderSizePixel = 0
     return box
 end
 
--- الأيم بوت
-makeLabel(panel, "موقع الهدف", 50)
-local headBtn = makeBtn(panel, "الرأس", 80)
-local bodyBtn = makeBtn(panel, "البطن", 130)
-local legBtn = makeBtn(panel, "القدم", 180)
+-- أزرار الأوامر على اليسار
+local fly_btn = makeBtn(leftPanel, "طيران", 10)
+local noclip_btn = makeBtn(leftPanel, "اختراق جدران", 50)
+local save_btn = makeBtn(leftPanel, "حفظ نقطة", 90)
+local tp_btn = makeBtn(leftPanel, "الذهاب للنقطة", 130)
+local del_cp_btn = makeBtn(leftPanel, "حذف النقطة", 170)
+local tp_player_btn = makeBtn(leftPanel, "انتقال للاعب", 210)
 
--- FOV
-makeLabel(panel, "FOV (مجال الرؤية)", 235)
-local fovBox = makeInputBox(panel, "1-500", 260)
-fovBox.Text = "100"
-
--- السرعة
-makeLabel(panel, "سرعة الايم (1-199)", 310)
-local speedBox = makeInputBox(panel, "1-199", 335)
+-- الإعدادات على اليمين
+makeLabel(rightPanel, "السرعة", 10)
+local speedBox = makeInputBox(rightPanel, "1-199", 35)
 speedBox.Text = "50"
 
--- كشف لاعبين
-local espBtn = makeBtn(panel, "كشف لاعبين", 390)
+makeLabel(rightPanel, "قوة النط", 75)
+local jumpBox = makeInputBox(rightPanel, "1-199", 100)
+jumpBox.Text = "100"
 
--- طيران
-local flyBtn = makeBtn(panel, "طيران", 440)
+makeLabel(rightPanel, "سرعة الطيران", 140)
+local flySpeedBox = makeInputBox(rightPanel, "1-199", 165)
+flySpeedBox.Text = "50"
 
--- اختراق جدران
-local noclipBtn = makeBtn(panel, "اختراق جدران", 490)
+-- حقل البحث في قسم اللاعب
+local searchBox = Instance.new("TextBox", playerLeftPanel)
+searchBox.Size = UDim2.new(0.9, 0, 0, 40)
+searchBox.Position = UDim2.new(0.05, 0, 0, 10)
+searchBox.PlaceholderText = "اسم الضحية"
+searchBox.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+searchBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+searchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+searchBox.TextSize = 12
+searchBox.BorderSizePixel = 0
 
--- نط لا نهائي
-local jumpBtn = makeBtn(panel, "نط لا نهائي", 540)
+-- صورة اللاعب
+local playerImage = Instance.new("ImageLabel", playerLeftPanel)
+playerImage.Size = UDim2.new(0.9, 0, 0.5, 0)
+playerImage.Position = UDim2.new(0.05, 0, 0.12, 0)
+playerImage.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+playerImage.BorderSizePixel = 0
+playerImage.Image = ""
 
--- إيقاف
-local stopBtn = Instance.new("TextButton", panel)
-stopBtn.Size = UDim2.new(0.9, 0, 0, 40)
-stopBtn.Position = UDim2.new(0.05, 0, 0, 590)
-stopBtn.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
-stopBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-stopBtn.Text = "إيقاف الكل"
-stopBtn.TextSize = 12
-stopBtn.BorderSizePixel = 0
+-- اسم اللاعب
+local playerName = Instance.new("TextLabel", playerLeftPanel)
+playerName.Size = UDim2.new(0.9, 0, 0, 25)
+playerName.Position = UDim2.new(0.05, 0, 0.68, 0)
+playerName.BackgroundTransparency = 1
+playerName.TextColor3 = Color3.fromRGB(255, 255, 255)
+playerName.Text = ""
+playerName.TextSize = 11
 
-local states = {aim = false, esp = false, fly = false, noclip = false, jump = false}
-local targetPart = "Head"
-local aimSpeed = 50
-local fov = 100
-local aimLoop = nil
-local flyLoop = nil
-local jumpLoop = nil
+-- أزرار اللاعب على اليمين
+local esp_btn = makeBtn(playerRightPanel, "كشف لاعبين", 10)
+local screen_btn = makeBtn(playerRightPanel, "مشاهدة الشاشة", 50)
 
+local end_btn = Instance.new("TextButton", playerRightPanel)
+end_btn.Size = UDim2.new(0.9, 0, 0, 35)
+end_btn.Position = UDim2.new(0.05, 0, 0, 90)
+end_btn.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+end_btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+end_btn.Text = "إنهاء"
+end_btn.TextSize = 11
+end_btn.BorderSizePixel = 0
+
+local states = {fly = false, noclip = false, esp = false, screen = false}
+local cp = nil
+local currentTarget = nil
+local screenLoop = nil
+local originalCam = nil
+
+-- المتغيرات الافتراضية
+local flySpeed = 50
+local jumpPower = 100
+local speed = 50
+
+-- دالة للتحقق من الرقم
 local function clampValue(val, min, max)
     if not val or val < min then return min end
     if val > max then return max end
     return math.floor(val)
 end
 
+-- تبديل الأقسام
+cmdBtn.MouseButton1Click:Connect(function()
+    cmdContent.Visible = true
+    playerContent.Visible = false
+    cmdBtn.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
+    playerBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+end)
+
+playerBtn.MouseButton1Click:Connect(function()
+    cmdContent.Visible = false
+    playerContent.Visible = true
+    cmdBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    playerBtn.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
+end)
+
+-- الدائرة تفتح/تغلق اللوحة
 circle.MouseButton1Click:Connect(function()
     panel.Visible = not panel.Visible
     circle.BackgroundColor3 = panel.Visible and Color3.fromRGB(200, 0, 0) or Color3.fromRGB(147, 51, 234)
@@ -146,94 +252,179 @@ closeBtn.MouseButton1Click:Connect(function()
     circle.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
 end)
 
--- اختيار جزء الجسم
-headBtn.MouseButton1Click:Connect(function()
-    targetPart = "Head"
-    headBtn.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
-    bodyBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    legBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-end)
-
-bodyBtn.MouseButton1Click:Connect(function()
-    targetPart = "Torso"
-    bodyBtn.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
-    headBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    legBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-end)
-
-legBtn.MouseButton1Click:Connect(function()
-    targetPart = "LeftFoot"
-    legBtn.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
-    headBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    bodyBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-end)
-
--- تحديث FOV
-fovBox.FocusLost:Connect(function()
-    local val = tonumber(fovBox.Text)
-    if val then
-        val = clampValue(val, 1, 500)
-        fov = val
-        fovBox.Text = tostring(val)
-    else
-        fovBox.Text = "100"
-        fov = 100
-    end
-end)
-
--- تحديث السرعة
+-- تحديث قيم السرعة
 speedBox.FocusLost:Connect(function()
     local val = tonumber(speedBox.Text)
     if val then
         val = clampValue(val, 1, 199)
-        aimSpeed = val / 100
+        speed = val
         speedBox.Text = tostring(val)
     else
         speedBox.Text = "50"
-        aimSpeed = 0.5
+        speed = 50
     end
 end)
 
--- الأيم بوت
-headBtn.MouseButton1Click:Connect(function()
-    if not states.aim then
-        states.aim = true
-        if aimLoop then aimLoop:Disconnect() end
+jumpBox.FocusLost:Connect(function()
+    local val = tonumber(jumpBox.Text)
+    if val then
+        val = clampValue(val, 1, 199)
+        jumpPower = val
+        jumpBox.Text = tostring(val)
+    else
+        jumpBox.Text = "100"
+        jumpPower = 100
+    end
+end)
+
+flySpeedBox.FocusLost:Connect(function()
+    local val = tonumber(flySpeedBox.Text)
+    if val then
+        val = clampValue(val, 1, 199)
+        flySpeed = val
+        flySpeedBox.Text = tostring(val)
+    else
+        flySpeedBox.Text = "50"
+        flySpeed = 50
+    end
+end)
+
+-- طيران
+fly_btn.MouseButton1Click:Connect(function()
+    states.fly = not states.fly
+    fly_btn.BackgroundColor3 = states.fly and Color3.fromRGB(147, 51, 234) or Color3.fromRGB(50, 50, 50)
+    
+    if states.fly then
+        local c = p.Character
+        if not c then return end
+        local r = c:FindFirstChild("HumanoidRootPart")
+        local hu = c:FindFirstChild("Humanoid")
+        if not r or not hu then return end
         
-        aimLoop = game:GetService("RunService").RenderStepped:Connect(function()
-            if not states.aim then
-                aimLoop:Disconnect()
+        local bv = Instance.new("BodyVelocity", r)
+        bv.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+        local bg = Instance.new("BodyGyro", r)
+        bg.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
+        
+        hu.JumpPower = jumpPower
+        
+        local loop
+        loop = game:GetService("RunService").RenderStepped:Connect(function()
+            if not states.fly then
+                loop:Disconnect()
+                bv:Destroy()
+                bg:Destroy()
+                hu.JumpPower = 50
                 return
             end
             
-            local target = nil
-            local closestDistance = math.huge
+            local move = Vector3.new(0, 0, 0)
+            local ui = game:GetService("UserInputService")
+            local cam = workspace.CurrentCamera
             
-            for _, otherPlayer in pairs(game.Players:GetPlayers()) do
-                if otherPlayer ~= p and otherPlayer.Character then
-                    local targetPos = otherPlayer.Character:FindFirstChild(targetPart)
-                    if targetPos then
-                        local distance = (targetPos.Position - cam.CFrame.Position).Magnitude
-                        if distance < closestDistance and distance < fov then
-                            closestDistance = distance
-                            target = targetPos
-                        end
-                    end
-                end
-            end
+            if ui:IsKeyDown(Enum.KeyCode.W) then move = move + cam.CFrame.LookVector end
+            if ui:IsKeyDown(Enum.KeyCode.S) then move = move - cam.CFrame.LookVector end
+            if ui:IsKeyDown(Enum.KeyCode.A) then move = move - cam.CFrame.RightVector end
+            if ui:IsKeyDown(Enum.KeyCode.D) then move = move + cam.CFrame.RightVector end
+            if ui:IsKeyDown(Enum.KeyCode.Space) then move = move + Vector3.new(0, 1, 0) end
             
-            if target then
-                local targetCFrame = CFrame.new(cam.CFrame.Position, target.Position)
-                cam.CFrame = cam.CFrame:Lerp(targetCFrame, aimSpeed)
-            end
+            if move.Magnitude > 0 then move = move.Unit end
+            bv.Velocity = move * flySpeed
+            bg.CFrame = cam.CFrame
         end)
     end
 end)
 
+-- اختراق جدران
+noclip_btn.MouseButton1Click:Connect(function()
+    states.noclip = not states.noclip
+    noclip_btn.BackgroundColor3 = states.noclip and Color3.fromRGB(147, 51, 234) or Color3.fromRGB(50, 50, 50)
+    
+    local c = p.Character
+    if c then
+        for _, v in pairs(c:GetDescendants()) do
+            if v:IsA("BasePart") then
+                v.CanCollide = not states.noclip
+            end
+        end
+    end
+end)
+
+-- حفظ نقطة
+save_btn.MouseButton1Click:Connect(function()
+    local c = p.Character
+    if c and c:FindFirstChild("HumanoidRootPart") then
+        cp = c.HumanoidRootPart.CFrame
+        save_btn.BackgroundColor3 = Color3.fromRGB(147, 51, 234)
+    end
+end)
+
+-- الذهاب للنقطة
+tp_btn.MouseButton1Click:Connect(function()
+    if cp then
+        local c = p.Character
+        if c and c:FindFirstChild("HumanoidRootPart") then
+            c.HumanoidRootPart.CFrame = cp
+        end
+    end
+end)
+
+-- حذف النقطة
+del_cp_btn.MouseButton1Click:Connect(function()
+    cp = nil
+    save_btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+end)
+
+-- انتقال للاعب
+tp_player_btn.MouseButton1Click:Connect(function()
+    if currentTarget and currentTarget.Character then
+        local targetRoot = currentTarget.Character:FindFirstChild("HumanoidRootPart")
+        local myRoot = p.Character:FindFirstChild("HumanoidRootPart")
+        if targetRoot and myRoot then
+            myRoot.CFrame = targetRoot.CFrame + Vector3.new(5, 0, 0)
+        end
+    end
+end)
+
+-- البحث عن لاعب
+searchBox:GetPropertyChangedSignal("Text"):Connect(function()
+    local text = searchBox.Text:lower()
+    if text:len() == 0 then
+        playerImage.Image = ""
+        playerName.Text = ""
+        currentTarget = nil
+        return
+    end
+    
+    local matches = {}
+    for _, pl in pairs(game.Players:GetPlayers()) do
+        if pl ~= p and pl.Name:lower():sub(1, text:len()) == text then
+            table.insert(matches, pl)
+        end
+    end
+    
+    if #matches == 1 then
+        local target = matches[1]
+        currentTarget = target
+        pcall(function()
+            playerImage.Image = game:GetService("Players"):GetUserThumbnailAsync(target.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+        end)
+        playerName.Text = target.Name
+    elseif #matches > 1 then
+        playerImage.Image = ""
+        playerName.Text = "متعدد - اكتب أكثر"
+        currentTarget = nil
+    else
+        playerImage.Image = ""
+        playerName.Text = "لم يتم العثور"
+        currentTarget = nil
+    end
+end)
+
 -- كشف لاعبين
-espBtn.MouseButton1Click:Connect(function()
+esp_btn.MouseButton1Click:Connect(function()
     states.esp = not states.esp
-    espBtn.BackgroundColor3 = states.esp and Color3.fromRGB(147, 51, 234) or Color3.fromRGB(50, 50, 50)
+    esp_btn.BackgroundColor3 = states.esp and Color3.fromRGB(147, 51, 234) or Color3.fromRGB(50, 50, 50)
     
     for _, pl in pairs(game.Players:GetPlayers()) do
         if pl ~= p and pl.Character then
@@ -256,108 +447,60 @@ espBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- طيران
-flyBtn.MouseButton1Click:Connect(function()
-    states.fly = not states.fly
-    flyBtn.BackgroundColor3 = states.fly and Color3.fromRGB(147, 51, 234) or Color3.fromRGB(50, 50, 50)
+-- مشاهدة الشاشة (من وجهة نظر اللاعب)
+screen_btn.MouseButton1Click:Connect(function()
+    if not currentTarget or not currentTarget.Character then return end
     
-    if states.fly then
-        local c = p.Character
-        if not c then return end
-        local r = c:FindFirstChild("HumanoidRootPart")
-        local hu = c:FindFirstChild("Humanoid")
-        if not r or not hu then return end
+    states.screen = not states.screen
+    screen_btn.BackgroundColor3 = states.screen and Color3.fromRGB(147, 51, 234) or Color3.fromRGB(50, 50, 50)
+    
+    if states.screen then
+        panel.Visible = false
+        local cam = workspace.CurrentCamera
+        local targetRoot = currentTarget.Character:FindFirstChild("HumanoidRootPart")
+        local targetHum = currentTarget.Character:FindFirstChild("Humanoid")
         
-        local bv = Instance.new("BodyVelocity", r)
-        bv.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-        local bg = Instance.new("BodyGyro", r)
-        bg.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
-        
-        if flyLoop then flyLoop:Disconnect() end
-        flyLoop = game:GetService("RunService").RenderStepped:Connect(function()
-            if not states.fly then
-                flyLoop:Disconnect()
-                bv:Destroy()
-                bg:Destroy()
-                return
-            end
+        if targetRoot and targetHum then
+            if screenLoop then screenLoop:Disconnect() end
+            originalCam = cam.CFrame
             
-            local move = Vector3.new(0, 0, 0)
-            local ui = game:GetService("UserInputService")
-            
-            if ui:IsKeyDown(Enum.KeyCode.W) then move = move + cam.CFrame.LookVector end
-            if ui:IsKeyDown(Enum.KeyCode.S) then move = move - cam.CFrame.LookVector end
-            if ui:IsKeyDown(Enum.KeyCode.A) then move = move - cam.CFrame.RightVector end
-            if ui:IsKeyDown(Enum.KeyCode.D) then move = move + cam.CFrame.RightVector end
-            if ui:IsKeyDown(Enum.KeyCode.Space) then move = move + Vector3.new(0, 1, 0) end
-            
-            if move.Magnitude > 0 then move = move.Unit end
-            bv.Velocity = move * 50
-            bg.CFrame = cam.CFrame
-        end)
-    end
-end)
-
--- اختراق جدران
-noclipBtn.MouseButton1Click:Connect(function()
-    states.noclip = not states.noclip
-    noclipBtn.BackgroundColor3 = states.noclip and Color3.fromRGB(147, 51, 234) or Color3.fromRGB(50, 50, 50)
-    
-    local c = p.Character
-    if c then
-        for _, v in pairs(c:GetDescendants()) do
-            if v:IsA("BasePart") then
-                v.CanCollide = not states.noclip
-            end
-        end
-    end
-end)
-
--- نط لا نهائي
-jumpBtn.MouseButton1Click:Connect(function()
-    states.jump = not states.jump
-    jumpBtn.BackgroundColor3 = states.jump and Color3.fromRGB(147, 51, 234) or Color3.fromRGB(50, 50, 50)
-    
-    if states.jump then
-        if jumpLoop then jumpLoop:Disconnect() end
-        jumpLoop = game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
-            if gameProcessed then return end
-            if input.KeyCode == Enum.KeyCode.Space and states.jump then
-                local hu = p.Character:FindFirstChild("Humanoid")
-                if hu then
-                    hu:Jump()
+            screenLoop = game:GetService("RunService").RenderStepped:Connect(function()
+                if not states.screen or not currentTarget or not currentTarget.Character then
+                    if screenLoop then screenLoop:Disconnect() screenLoop = nil end
+                    return
                 end
-            end
-        end)
-    end
-end)
-
--- إيقاف الكل
-stopBtn.MouseButton1Click:Connect(function()
-    states.aim = false
-    states.esp = false
-    states.fly = false
-    states.noclip = false
-    states.jump = false
-    
-    headBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    espBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    flyBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    noclipBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    jumpBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    
-    if aimLoop then aimLoop:Disconnect() end
-    if flyLoop then flyLoop:Disconnect() end
-    if jumpLoop then jumpLoop:Disconnect() end
-    
-    local c = p.Character
-    if c then
-        for _, v in pairs(c:GetDescendants()) do
-            if v:IsA("BasePart") then
-                v.CanCollide = true
-            end
+                
+                targetRoot = currentTarget.Character:FindFirstChild("HumanoidRootPart")
+                if targetRoot and targetHum then
+                    cam.CFrame = targetRoot.CFrame * CFrame.new(0, targetHum.HipHeight, 0)
+                    cam.Focus = targetRoot.CFrame * CFrame.new(0, targetHum.HipHeight, -10)
+                end
+            end)
+        end
+    else
+        panel.Visible = true
+        if screenLoop then 
+            screenLoop:Disconnect() 
+            screenLoop = nil
+        end
+        if originalCam then
+            workspace.CurrentCamera.CFrame = originalCam
         end
     end
 end)
 
-print("N7x Aim Bot تم التحميل!")
+-- إنهاء مشاهدة الشاشة
+end_btn.MouseButton1Click:Connect(function()
+    states.screen = false
+    screen_btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    panel.Visible = true
+    if screenLoop then 
+        screenLoop:Disconnect() 
+        screenLoop = nil
+    end
+    if originalCam then
+        workspace.CurrentCamera.CFrame = originalCam
+    end
+end)
+
+print("N7x تم تحميله!")
